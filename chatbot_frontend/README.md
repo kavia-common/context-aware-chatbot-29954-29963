@@ -1,82 +1,57 @@
-# Lightweight React Template for KAVIA
+# Chatbot Frontend — Ocean Professional
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+Modern, responsive React UI for a context-aware chatbot with RAG + MCP.
 
 ## Features
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+- Sidebar navigation with recent chats
+- Main chat panel with user/assistant bubbles
+- Input composer at bottom with Enter-to-send
+- REST API integration:
+  - GET `/api/chat/history`
+  - POST `/api/chat/send` (body: `{ "message": "..." }`)
+- Ocean Professional theme (blue + amber accents), rounded corners, gradients, subtle shadows
+- Responsive layout and accessible roles/labels
 
 ## Getting Started
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-### `npm test`
-
-Launches the test runner in interactive watch mode.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-## Customization
-
-### Colors
-
-The main brand colors are defined as CSS variables in `src/App.css`:
-
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
+Install dependencies:
+```bash
+npm install
 ```
 
-### Components
+Run the app:
+```bash
+npm start
+```
 
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
+Build for production:
+```bash
+npm run build
+```
 
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
+## Configuration
 
-## Learn More
+Environment variables (create `.env` in this folder or set in environment):
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `REACT_APP_API_BASE_URL` — Optional. Base URL of backend. Defaults to same origin.
 
-### Code Splitting
+Example `.env`:
+```
+REACT_APP_API_BASE_URL=http://localhost:8000
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Project Structure
 
-### Analyzing the Bundle Size
+- `src/theme.js` — Ocean Professional design tokens
+- `src/services/api.js` — REST client helpers
+- `src/components/Sidebar.js` — Sidebar and history
+- `src/components/ChatWindow.js` — Messages and composer
+- `src/components/Layout.js` — App shell and responsive container
+- `src/App.js` — App state management and integration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Notes
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- The UI gracefully falls back to a local "New chat" session if history is unavailable.
+- No external UI libraries are used to keep bundle minimal.
+- All network errors surface as a non-blocking banner above the composer.

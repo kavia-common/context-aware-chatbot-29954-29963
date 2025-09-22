@@ -1,0 +1,27 @@
+export const Theme = {
+  name: "Ocean Professional",
+  colors: {
+    primary: "#2563EB",
+    secondary: "#F59E0B",
+    success: "#F59E0B",
+    error: "#EF4444",
+    background: "#f9fafb",
+    surface: "#ffffff",
+    text: "#111827",
+    subtleText: "#6B7280",
+    border: "rgba(17,24,39,0.08)",
+    gradientFrom: "rgba(59,130,246,0.1)",
+    gradientTo: "#f9fafb",
+    shadow: "0 8px 24px rgba(0,0,0,0.06)",
+    shadowSoft: "0 2px 12px rgba(0,0,0,0.05)",
+  },
+  radius: {
+    sm: "10px",
+    md: "14px",
+    lg: "18px",
+    xl: "24px",
+    round: "999px",
+  },
+  spacing: (n) => `${n * 4}px`,
+  transition: "all 220ms cubic-bezier(0.22, 1, 0.36, 1)",
+};
