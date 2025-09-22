@@ -30,6 +30,29 @@ Build for production:
 npm run build
 ```
 
+### Fixing "Invalid Host header" in preview
+
+When running in a preview/proxy environment, Create React App's development server may block requests with an "Invalid Host header" because the forwarded Host does not match localhost. To allow the preview host:
+
+1) Copy the provided environment example:
+```bash
+cp .env.example .env
+```
+
+2) Ensure these settings are present in `.env`:
+```
+HOST=0.0.0.0
+PORT=3000
+DANGEROUSLY_DISABLE_HOST_CHECK=true
+```
+
+- HOST=0.0.0.0 lets the dev server accept connections from the preview proxy.
+- DANGEROUSLY_DISABLE_HOST_CHECK=true disables the host header validation used by webpack-dev-server in development so the preview domain is accepted.
+
+These settings are intended for local/CI preview use only and should not be used for public internet exposure.
+
+If you still encounter issues, verify your preview URL uses the same port as defined by PORT (default 3000).
+
 ## Configuration
 
 Environment variables (create `.env` in this folder or set in environment):
