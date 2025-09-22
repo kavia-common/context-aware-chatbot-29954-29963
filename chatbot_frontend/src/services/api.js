@@ -1,4 +1,23 @@
-const BASE_URL = process.env.REACT_APP_API_BASE_URL || "";
+/**
+ * Resolve and normalize the API base URL.
+ * - If REACT_APP_API_BASE_URL is set, use it (without trailing slash).
+ * - Otherwise, default to same-origin (empty string) and rely on CRA proxy for /api.
+ */
+const RAW_BASE = process.env.REACT_APP_API_BASE_URL || "";
+const BASE_URL = RAW_BASE.endsWith("/")
+  ? RAW_BASE.slice(0, -1)
+  : RAW_BASE;
+
+/**
+ * Join base and path, avoiding double slashes.
+ * If the path is an absolute URL (http/https), return it untouched.
+ */
+function buildUrl(path) {
+  if (/^https?:\/\//i.test(path)) return path;
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  if (!BASE_URL) return normalizedPath;
+  return `${BASE_URL}${normalizedPath}`;
+}
 
 /**
  * Internal helper to handle JSON requests with error handling.
@@ -7,7 +26,8 @@ const BASE_URL = process.env.REACT_APP_API_BASE_URL || "";
  * @returns {Promise<any>}
  */
 async function request(url, options = {}) {
-  const res = await fetch(`${BASE_URL}${url}`, {
+  const target = buildUrl(url);
+  const res = await fetch(target, {
     headers: {
       "Content-Type": "application/json",
       ...(options.headers || {}),
@@ -22,10 +42,12 @@ async function request(url, options = {}) {
   if (!res.ok) {
     const message =
       (data && data.message) ||
-      (typeof data === "string" ? data : "Request failed");
+      (typeof data === "string" && data) ||
+      `Request failed with status ${res.status} at ${target}`;
     const error = new Error(message);
     error.status = res.status;
     error.data = data;
+    error.url = target;
     throw error;
   }
 
