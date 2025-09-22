@@ -8,10 +8,11 @@
     "react-scripts": "^5.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env HOST=${HOST:-0.0.0.0} PORT=${PORT:-3000} DANGEROUSLY_DISABLE_HOST_CHECK=${DANGEROUSLY_DISABLE_HOST_CHECK:-true} react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start:strict": "react-scripts start"
   },
   "proxy": "http://localhost:8000",
   "eslintConfig": {

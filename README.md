@@ -10,6 +10,8 @@ If the React frontend shows "Invalid Host header" in preview:
      - HOST=0.0.0.0
      - PORT=3000
      - DANGEROUSLY_DISABLE_HOST_CHECK=true
-- Restart the dev server.
+- Start with:
+  - `npm start` (ensures env vars are applied via cross-env even if .env is ignored)
+- Verify console shows `[setupProxy] Loaded.` when the dev server starts.
 
 This allows the CRA dev server to accept the preview system's forwarded Host header. Do not use this configuration on public-facing deployments.

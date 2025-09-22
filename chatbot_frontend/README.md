@@ -51,7 +51,22 @@ DANGEROUSLY_DISABLE_HOST_CHECK=true
 
 These settings are intended for local/CI preview use only and should not be used for public internet exposure.
 
-If you still encounter issues, verify your preview URL uses the same port as defined by PORT (default 3000).
+If you still encounter issues:
+- The preview runner might ignore `.env`. Use the built-in start script which enforces these variables via `cross-env`:
+  ```bash
+  npm start
+  ```
+  This runs:
+  ```
+  cross-env HOST=0.0.0.0 PORT=3000 DANGEROUSLY_DISABLE_HOST_CHECK=true react-scripts start
+  ```
+  ensuring the variables are applied even if `.env` isn't loaded by the runner.
+
+- Confirm port: the preview URL must proxy to the same port as `PORT` (default 3000).
+
+- Verify dev server picks up runtime files: you should see `[setupProxy] Loaded.` logs in the terminal when the dev server starts. If you don't see them, the dev server may not be starting from this folder.
+
+- As a last resort (not recommended), ejecting would allow customizing `webpackDevServer.config.js` to set `allowedHosts: 'all'`. Prefer to avoid `npm run eject`.
 
 ## Configuration
 
